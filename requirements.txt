@@ -1,0 +1,13 @@
+asgiref==3.8.1
+certifi==2024.8.30
+charset-normalizer==3.4.0
+colorama==0.4.6
+dj-database-url==2.3.0
+Django==5.1.2
+gunicorn==23.0.0
+psycopg2-binary==2.9.10
+python-dotenv==1.0.1
+requests==2.32.3
+urllib3==2.2.3
+uvicorn==0.32.0
+whitenoise==6.7.0

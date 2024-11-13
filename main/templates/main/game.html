@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pang 2024 - Juego</title>
+    
+    <!-- Cargar la librería Phaser -->
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.86.0/dist/phaser.js"></script>
+    
+    <!-- Estilos opcionales -->
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #282c34;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #game-container {
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor del juego -->
+    <div id="game-container"></div>
+    <!-- Cargar el archivo game.js después de definir las rutas -->
+    <script src="{% static 'game.js' %}"></script>
+</body>
+</html>
