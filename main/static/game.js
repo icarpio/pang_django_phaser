@@ -12,161 +12,293 @@ let currentBackground;
 let levelBackgrounds = [
     '/static/background_level_1.png', 
     '/static/background_level_2.png',
-    '/static/backgrounds/background_level_3.png',
-    '/static/backgrounds/background_level_4.png',
+    '/static/background_level_3.png',
+    '/static/background_level_4.png',
+    '/static/background_level_5.png',
 ];
 let platforms;
 let harpoons; // Grupo para los arpones
 
+const BUBBLE_TYPES = {
+    'bubble': { image: 'bubble', score: 10, splitCount: 2 },     
+    'bubbleSmall': { image: 'bubbleSmall', score: 20, splitCount: 1 }, 
+    'bubbleTiny': { image: 'bubbleTiny', score: 30, splitCount: 0 } 
+};
 
 // Función para cargar los recursos
 function preload() {
-    this.load.image('player', 'static/player.png');
-    this.load.image('harpoon', 'static/harpoon.png');
-    this.load.image('bubble', 'static/bubble.png');
-    this.load.image('bubbleSmall', 'static/bubbleSmall.png');
-    this.load.image('bubbleTiny', 'static/bubbleTiny.png'); 
-    this.load.image('background', 'static/background.png');
-    this.load.image('ground', 'static/ground.png'); 
+    this.load.image('player', '/static/player.png');
+    this.load.image('harpoon', '/static/harpoon.png');
+    this.load.image('bubble', '/static/bubble.png');        
+    this.load.image('bubbleSmall', '/static/bubbleSmall.png'); 
+    this.load.image('bubbleTiny', '/static/bubbleTiny.png'); 
+    this.load.image('ground', '/static/ground.png'); 
     for (let i = 0; i < levelBackgrounds.length; i++) {
         this.load.image(`background_${i + 1}`, levelBackgrounds[i]);
     }
 }
 
-
 function create() {
-    // Crear el grupo de arpones
-    harpoons = this.physics.add.group();
-
     platforms = this.physics.add.staticGroup();
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    platforms.create(400, 568, 'ground').setScale(1).refreshBody();
 
     player = this.physics.add.sprite(400, 500, 'player').setCollideWorldBounds(true);
+    player.setDisplaySize(50, 50);
     this.physics.add.collider(player, platforms);
 
-    // Crear el arpón inicialmente pero ocultarlo
-    harpoon = this.physics.add.image(400, 500, 'harpoon').setVisible(false);
-    harpoon.setActive(false);
-    harpoon.setCollideWorldBounds(true);
-    // Añadir el arpón al grupo
-    harpoons.add(harpoon);
+    // Hacer que el jugador sea inmóvil en colisiones con burbujas
+    player.body.immovable = true; 
 
-    // Configurar controles
+    harpoons = this.physics.add.group({
+        defaultKey: 'harpoon',
+        maxSize: 10 // Número máximo de arpones que puedes tener
+    });
+
+    // Inicializa los arpones en el grupo
+    harpoons.children.iterate((harpoon) => {
+        harpoon.setDisplaySize(20, 20);
+        harpoon.setCollideWorldBounds(true);
+        harpoon.setVisible(false); // Inicialmente oculto
+        harpoon.setActive(false); // Inicialmente no activo
+        harpoon.body.enable = false; // Desactiva el cuerpo
+    });
+
     cursors = this.input.keyboard.createCursorKeys();
-    this.input.keyboard.on('keydown-SPACE', shootHarpoon.bind(this)); // Usar bind para asegurar el contexto
+    this.input.keyboard.on('keydown-SPACE', shootHarpoon.bind(this));
 
     livesText = this.add.text(16, 16, 'Vidas: ' + playerLives, { fontSize: '32px', fill: '#fff' });
     levelText = this.add.text(16, 48, 'Nivel: ' + level, { fontSize: '32px', fill: '#fff' });
     scoreText = this.add.text(16, 80, 'Puntaje: ' + score, { fontSize: '32px', fill: '#fff' });
 
-    currentBackground = this.add.image(400, 300, `background_${level}`).setScrollFactor(0);
+    // Obtener el tamaño del juego
+    const gameWidth = this.cameras.main.width;
+    const gameHeight = this.cameras.main.height;
 
-    createBubblesAndObstacles.call(this); // Asegúrate de que `this` se refiere a la escena
+    // Agregar la imagen de fondo y establecer su tamaño
+    currentBackground = this.add.image(0, 0, `background_${level}`)
+        .setOrigin(0, 0) // Asegurarse de que la imagen se ancle en la esquina superior izquierda
+        .setDisplaySize(gameWidth , gameHeight-50) // Ajustar el tamaño de la imagen al tamaño de la pantalla
+        .setScrollFactor(0) // No se mueve con la cámara
+        .setDepth(-1); // Colocar detrás de otros objetos
 
-    // Colisiones entre el arpón y las burbujas
-    this.physics.add.collider(harpoons, bubbles, hitBubble, null, this);
+    createBubblesAndObstacles.call(this); 
+
+    // Cambiar la colisión del jugador con burbujas a un overlap
+    this.physics.add.overlap(harpoons, bubbles, hitBubble, null, this);
+    this.physics.add.overlap(player, bubbles, hitPlayerBubble, null, this);
 }
-
-
-
 function shootHarpoon() {
-    if (harpoonLaunched) return; // Si ya se disparó un arpón, no hacer nada
+    if (harpoonLaunched) return; 
 
-    harpoonLaunched = true; // Marcar que el arpón ha sido disparado
-
-    // Hacer visible el arpón y colocarlo en la posición del jugador
-    harpoon.setVisible(true);
-    harpoon.setPosition(player.x, player.y);
-    harpoon.setActive(true); // Hacerlo activo para que se pueda mover
-    harpoon.body.enable = true; // Habilitar el cuerpo del arpón
-
-    // Verifica si el arpón está activo y si su cuerpo existe
-    if (harpoon.active && harpoon.body) {
-        const speed = 500; // La velocidad del arpón
-        harpoon.body.setVelocityY(-speed); // Establecer la velocidad en el eje Y hacia arriba
+    const harpoon = harpoons.get();
+    if (!harpoon) {
+        console.error("No hay arpones disponibles en el grupo.");
+        return;
     }
 
-    // Destruir el arpón después de un tiempo (2 segundos)
+    harpoonLaunched = true; 
+
+    // Configura el arpón
+    harpoon.setVisible(true);
+    harpoon.setDisplaySize(25, 25);
+    harpoon.setPosition(player.x, player.y);
+    harpoon.setActive(true);
+    harpoon.body.enable = true;
+
+    const speed = 500; 
+    harpoon.body.setVelocityY(-speed);
+
     this.time.delayedCall(2000, () => {
         if (harpoon.active) {
-            harpoon.setVisible(false); // Ocultar el arpón
-            harpoon.setActive(false); // Desactivar el arpón
-            harpoon.body.enable = false; // Deshabilitar el cuerpo para que no siga moviéndose
-            harpoonLaunched = false; // Permitir que se dispare de nuevo
+            harpoon.setVisible(false);
+            harpoon.setActive(false);
+            harpoon.body.enable = false;
+            harpoonLaunched = false;
         }
     });
 }
 
-
-
-// Función para manejar la colisión con el arpón
 function hitBubble(bubble, harpoon) {
-    if (!bubble || !harpoon || !bubble.active || !harpoon.active) {
-        return; // Salir si alguno de los objetos no está activo
+    if (!bubble || !harpoon || !bubble.active || !harpoon.active) return;
+
+    const bubbleType = bubble.getData('type');
+    const bubbleInfo = BUBBLE_TYPES[bubbleType];
+
+    if (!bubbleInfo) {
+        console.error('Tipo de burbuja no válido:', bubbleType);
+        return;
     }
 
-    bubble.destroy(); // Destruir la burbuja al ser golpeada por el arpón
+    score += bubbleInfo.score;
+    scoreText.setText('Puntaje: ' + score);
 
-    score += 10; // Incrementar el puntaje
-    scoreText.setText('Puntaje: ' + score); // Actualizar el texto del puntaje
+    if (bubbleInfo.splitCount > 0) {
+        createSmallerBubbles.call(this, bubble.x, bubble.y, bubbleInfo.splitCount, bubbleType);
+    }
 
-    // Desactivar el arpón en lugar de destruirlo
-    harpoon.setVisible(false); // Ocultar el arpón
-    harpoon.setActive(false); // Desactivar el arpón
-    harpoon.body.enable = false; // Deshabilitar el cuerpo para que no siga moviéndose
+    bubble.destroy();
+    harpoon.destroy();
+    harpoonLaunched = false;
 
-    harpoonLaunched = false; // Permitir que se dispare de nuevo el arpón
+    // Remover la burbuja del array
+    bubbles = bubbles.filter(b => b !== bubble);
 }
 
-// Función para crear burbujas y obstáculos
 function createBubblesAndObstacles() {
-    // Destruir las burbujas previas pero solo si están activas
     bubbles.forEach(bubble => {
         if (bubble && bubble.active) {
-            bubble.destroy(); // Asegurarse de destruir solo las burbujas activas
+            bubble.destroy();
         }
     });
-    bubbles = []; // Reiniciar el array de burbujas
+    bubbles = [];
 
-    // Crear nuevas burbujas
-    for (let i = 0; i < level * 3; i++) {
-        let bubbleType = Phaser.Math.Between(0, 1) ? 'bubble' : 'bubbleSmall';
+    for (let i = 0; i < level * 1; i++) {
+        let bubbleType = 'bubble';
         let bubble = this.physics.add.image(Phaser.Math.Between(50, 750), 0, bubbleType);
+
         bubble.setVelocity(Phaser.Math.Between(-100, 100), Phaser.Math.Between(50, 200));
         bubble.setBounce(1, 1);
         bubble.setCollideWorldBounds(true);
-        bubble.setData('splitCount', 0);
+        bubble.setData('type', bubbleType);
         bubble.setInteractive();
 
-        // Agregar el collider para el arpón solo si ambos son activos
-        if (harpoons) {
-            this.physics.add.collider(bubble, harpoons, hitBubble, null, this);
-        }
+        // Añadir colisiones
+        this.physics.add.collider(bubble, harpoons, hitBubble, null, this);
         this.physics.add.collider(player, bubble, hitPlayerBubble, null, this);
-        this.physics.add.collider(bubble, platforms); // Colisión con el suelo
+        this.physics.add.collider(bubble, platforms);
+
+        bubbles.push(bubble);
+    }
+}
+
+function createSmallerBubbles(x, y, count, bubbleType) {
+    let newBubbleType;
+
+    if (bubbleType === 'bubble') {
+        newBubbleType = 'bubbleSmall';
+    } else if (bubbleType === 'bubbleSmall') {
+        newBubbleType = 'bubbleTiny';
+    } else {
+        return;
+    }
+
+    for (let i = 0; i < count; i++) {
+        const bubble = this.physics.add.image(x, y, BUBBLE_TYPES[newBubbleType].image);
+        bubble.setVelocity(Phaser.Math.Between(-100, 100), Phaser.Math.Between(50, 200));
+        bubble.setBounce(1, 1);
+        bubble.setCollideWorldBounds(true);
+        bubble.setData('type', newBubbleType);
+
+        // Añadir colisiones específicas para burbujas más pequeñas
+        this.physics.add.collider(bubble, harpoons, hitBubble, null, this);
+        this.physics.add.collider(player, bubble, hitPlayerBubble, null, this);
+        this.physics.add.collider(bubble, platforms);
 
         bubbles.push(bubble);
     }
 }
 
 
-
-
-// Función para manejar la colisión del jugador con la burbuja
-function hitPlayerBubble(player, bubble) {
+function hitPlayerBubble(bubble) {
     if (!bubble || !bubble.active) {
-        return; // Si la burbuja no está activa, no hacer nada
+        return; 
     }
 
-    playerLives--; // Reducir vidas
-    livesText.setText('Vidas: ' + playerLives); // Actualizar el texto de vidas
-    bubble.destroy(); // Destruir la burbuja al ser golpeada por el jugador
+    playerLives--; 
+    livesText.setText('Vidas: ' + playerLives); 
 
     if (playerLives <= 0) {
-        // Lógica para manejar el fin del juego
         console.log('Game Over');
+        endGame.call(this);
     }
 }
+// Función para pasar al siguiente nivel
+function nextLevel() {
+
+    // Incrementar el nivel
+    level++;
+    levelText.setText('Nivel: ' + level);
+
+    // Actualizar el fondo para el siguiente nivel
+    currentBackground.setTexture(`background_${level}`);
+    
+    // Aumentar el número de burbujas para el siguiente nivel
+    createBubblesAndObstacles.call(this);
+     // Verificar si el nivel es 6 o superior
+     if (level >= 6) {
+        finishGame.call(this);
+        return;
+    }
+}
+
+// Función de fin de juego
+function endGame() {
+    console.log("GAME OVER");
+
+    // Muestra el mensaje de GAME OVER
+    const gameOverText = this.add.text(400, 300, 'GAME OVER', {
+        fontSize: '32px',
+        fill: '#ffffff'
+    });
+    gameOverText.setOrigin(0.5);
+
+    // Indica cómo reiniciar el juego
+    const restartText = this.add.text(400, 350, 'Presiona "R" para reiniciar', {
+        fontSize: '24px',
+        fill: '#ffffff'
+    });
+    restartText.setOrigin(0.5);
+
+    // Desactivar al jugador y otros elementos si es necesario
+    player.setActive(false).setVisible(false);
+    bubbles.forEach(bubble => {
+        bubble.setActive(false).setVisible(false);
+    });
+
+    // Configurar una tecla para reiniciar el juego
+    this.input.keyboard.once('keydown-R', restartGame, this);
+}
+
+// Función para finalizar el juego al alcanzar el nivel 6
+function finishGame() {
+    console.log("¡Felicidades! Has completado el juego.");
+
+    const victoryText = this.add.text(400, 300, '¡Felicidades! Has completado el juego.', {
+        fontSize: '32px',
+        fill: '#ffffff'
+    });
+    victoryText.setOrigin(0.5);
+
+    const restartText = this.add.text(400, 350, 'Presiona "R" para reiniciar', {
+        fontSize: '24px',
+        fill: '#ffffff'
+    });
+    restartText.setOrigin(0.5);
+
+    player.setActive(false).setVisible(false);
+    bubbles.forEach(bubble => {
+        bubble.setActive(false).setVisible(false);
+    });
+
+    this.input.keyboard.once('keydown-R', restartGame, this);
+}
+
+// Función para reiniciar el juego
+function restartGame() {
+    // Restablecer variables del juego
+    level = 1;
+    playerLives = 3;
+    score = 0;
+
+    // Actualizar los textos de nivel, puntaje y vidas
+    levelText.setText('Nivel: ' + level);
+    scoreText.setText('Puntaje: ' + score);
+    livesText.setText('Vidas: ' + playerLives);
+
+    // Reiniciar la escena
+    this.scene.restart();
+}
+
 
 // Función de actualización (update) - esto debe estar en tu ciclo de actualización
 function update() {
@@ -182,7 +314,18 @@ function update() {
     // Solo disparar el arpón si no ha sido lanzado
     if (cursors.up.isDown && !harpoonLaunched) {
         shootHarpoon(); // Lanza el arpón si no se ha lanzado aún
+    }// Verificar si se destruyeron todas las burbujas
+
+    if (bubbles.length === 0) {
+        nextLevel.call(this);
     }
+   
+    bubbles.forEach(bubble => {
+        if (bubble.active) {
+            bubble.angle += 2; // Rotación continua en sentido antihorario
+        }
+    });
+    console.log(bubbles.length)
 }
 
 // Configuración de Phaser
@@ -193,9 +336,8 @@ const config = {
     scene: { preload, create, update },
     physics: {
         default: 'arcade',
-        arcade: { gravity: { y: 0 }, debug: false }
+        arcade: { gravity: { y: 0 }, debug: false } // Cambia a true para activar el debug
     }
 };
-
 const game = new Phaser.Game(config);
 

@@ -12,17 +12,16 @@
     <!-- Estilos opcionales -->
     <style>
         body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #282c34;
-            color: white;
-            font-family: Arial, sans-serif;
+            margin: 0; /* Eliminar márgenes por defecto */
+            display: flex; /* Usar Flexbox para centrar el contenido */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+            height: 100vh; /* Usar toda la altura de la ventana */
+            background-color: #000; /* Opcional: color de fondo */
         }
-        #game-container {
-            width: 800px;
-            height: 600px;
+    
+        canvas {
+            display: block; /* Evitar espacios en blanco alrededor del canvas */
         }
     </style>
 </head>
