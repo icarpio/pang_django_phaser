@@ -7,7 +7,6 @@ venv/
 
 # Archivos y carpetas estáticos generados
 staticfiles/
-main/static
 
 
 README.md
