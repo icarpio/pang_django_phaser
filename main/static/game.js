@@ -369,10 +369,9 @@ function buildMobileControls() {
         player.setVelocityX(0);
     });
 
-
     shootButton.on('pointerdown', () => {
         if (!harpoonLaunched) {
-            shootHarpoon();
+            shootHarpoon.call(this); 
         }
     });
 }
