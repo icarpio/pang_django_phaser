@@ -63,7 +63,13 @@ function create() {
         harpoon.body.enable = false; // Desactiva el cuerpo
     });
 
-    cursors = this.input.keyboard.createCursorKeys();
+    
+    // Detección de dispositivos
+    if (this.sys.game.device.input.touch) {
+        buildMobileControls.call(this);
+    } else {
+        cursors = this.input.keyboard.createCursorKeys();
+    }
     this.input.keyboard.on('keydown-SPACE', shootHarpoon.bind(this));
 
     livesText = this.add.text(16, 16, 'Vidas: ' + playerLives, { fontSize: '32px', fill: '#fff' });
@@ -303,29 +309,69 @@ function restartGame() {
 // Función de actualización (update) - esto debe estar en tu ciclo de actualización
 function update() {
     // Control de movimiento del jugador
-    if (cursors.left.isDown) {
-        player.setVelocityX(-160);
-    } else if (cursors.right.isDown) {
-        player.setVelocityX(160);
+    if (this.sys.game.device.input.touch) {
+        handleMobileControls.call(this);
     } else {
-        player.setVelocityX(0);
+        // Controles de teclado
+        if (cursors.left.isDown) {
+            player.setVelocityX(-160);
+        } else if (cursors.right.isDown) {
+            player.setVelocityX(160);
+        } else {
+            player.setVelocityX(0);
+        }
+
+        // Solo disparar el arpón si no ha sido lanzado
+        if (cursors.up.isDown && !harpoonLaunched) {
+            shootHarpoon(); // Lanza el arpón si no se ha lanzado aún
+        }
     }
 
-    // Solo disparar el arpón si no ha sido lanzado
-    if (cursors.up.isDown && !harpoonLaunched) {
-        shootHarpoon(); // Lanza el arpón si no se ha lanzado aún
-    }// Verificar si se destruyeron todas las burbujas
-
+    // Verificar si se destruyeron todas las burbujas
     if (bubbles.length === 0) {
         nextLevel.call(this);
     }
-   
+
     bubbles.forEach(bubble => {
         if (bubble.active) {
             bubble.angle += 2; // Rotación continua en sentido antihorario
         }
     });
-    console.log(bubbles.length)
+    console.log(bubbles.length);
+}
+
+// Función para manejar controles móviles
+function handleMobileControls() {
+    // Aquí puedes manejar la lógica de los controles móviles
+    // Por ejemplo, verificar el estado de los botones táctiles
+}
+
+// Función para construir controles móviles
+function buildMobileControls() {
+    // Crear botones táctiles para controles móviles
+    const leftButton = this.add.rectangle(50, this.scale.height - 50, 100, 50, 0x0000ff).setInteractive();
+    const rightButton = this.add.rectangle(150, this.scale.height - 50, 100, 50, 0x00ff00).setInteractive();
+    const shootButton = this.add.rectangle(250, this.scale.height - 50, 100, 50, 0xff0000).setInteractive();
+
+    leftButton.on('pointerdown', () => {
+        player.setVelocityX(-160);
+    });
+    leftButton.on('pointerup', () => {
+        player.setVelocityX(0);
+    });
+
+    rightButton.on('pointerdown', () => {
+        player.setVelocityX(160);
+    });
+    rightButton.on('pointerup', () => {
+        player.setVelocityX(0);
+    });
+
+    shootButton.on('pointerdown', () => {
+        if (!harpoonLaunched) {
+            shootHarpoon();
+        }
+    });
 }
 
 // Configuración de Phaser
