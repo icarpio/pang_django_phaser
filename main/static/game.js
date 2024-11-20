@@ -261,6 +261,7 @@ function endGame() {
         bubble.setActive(false).setVisible(false);
     });
 
+    
     // Configurar una tecla para reiniciar el juego
     this.input.keyboard.once('keydown-R', restartGame, this);
 }
