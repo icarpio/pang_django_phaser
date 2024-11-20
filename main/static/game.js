@@ -363,10 +363,13 @@ function buildMobileControls() {
     //const leftButton = this.add.rectangle(50, this.scale.height - 50, 100, 50, 0x0000ff).setInteractive();
 
     const leftButton = this.add.sprite(50, this.scale.height - 50, 'leftButtonImage').setInteractive();
-    const shootButton = this.add.sprite(150, this.scale.height - 50, 'rightButtonImage').setInteractive();
-    const rightButton = this.add.sprite(400, this.scale.height - 50, 'shootButtonImage').setInteractive(); 
+    const rightButton = this.add.sprite(100, this.scale.height - 50, 'rightButtonImage').setInteractive();
+    const shootButton = this.add.sprite(800, this.scale.height - 50, 'shootButtonImage').setInteractive(); 
 
-    shootButton.setInteractive();
+    // Escala los botones si es necesario
+    leftButton.setScale(2); // Ajusta el tamaño según sea necesario
+    rightButton.setScale(2);
+    shootButton.setScale(2);
 
     leftButton.on('pointerdown', () => {
         player.setVelocityX(-160);
