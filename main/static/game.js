@@ -242,8 +242,6 @@ function nextLevel() {
 
 // Función de fin de juego
 function endGame() {
-    console.log("GAME OVER");
-
     // Muestra el mensaje de GAME OVER
     const gameOverText = this.add.text(400, 300, 'GAME OVER', {
         fontSize: '32px',
