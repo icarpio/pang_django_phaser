@@ -12,27 +12,21 @@
             color: white;
             margin: 0;
             padding: 0;
-            height: 100%; /* Asegura que el cuerpo ocupa toda la altura de la pantalla */
         }
-        
         .container {
-            margin-top: 10vh; /* Usar vh para hacer que el margen se ajuste a la altura de la pantalla */
-            margin-bottom: 10vh;
+            margin-top: 20vh; /* Ajuste para centrar mejor en dispositivos pequeños */
         }
-
         h1 {
-            font-size: 6vw; /* Ajusta el tamaño del título según el ancho de la pantalla */
+            font-size: 8vw; /* Ajusta el tamaño del título según el ancho de la pantalla */
             margin-bottom: 20px;
         }
-
         p {
-            font-size: 3vw; /* Ajusta el tamaño del texto según el ancho de la pantalla */
+            font-size: 5vw; /* Ajusta el tamaño del párrafo según el ancho de la pantalla */
             margin-bottom: 30px;
         }
-
         .button {
-            padding: 2em 3em; /* Ajusta el tamaño del botón usando em */
-            font-size: 1.2em; /* Ajusta el tamaño del texto dentro del botón */
+            padding: 2em 4em; /* Aumenta el tamaño del botón de acuerdo al tamaño de pantalla */
+            font-size: 1.5em; /* Ajusta el tamaño de la fuente del botón */
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -40,15 +34,15 @@
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
+            max-width: 80%; /* Evita que el botón sea más grande que la pantalla */
         }
-
         .button:hover {
             background-color: #45a049;
         }
+
     </style>
 </head>
 <body>
-    <div class="background"></div> <!-- Si quieres una imagen de fondo -->
     <div class="container">
         <h1>¡Bienvenido a Pang 2024!</h1>
         <p>Destruye las burbujas y gana puntajes.</p>
