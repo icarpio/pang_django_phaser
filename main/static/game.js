@@ -379,13 +379,18 @@ function buildMobileControls() {
 // Configuración de Phaser
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 800,  // Ancho fijo del juego
+    height: 600, // Alto fijo del juego
     scene: { preload, create, update },
     physics: {
         default: 'arcade',
         arcade: { gravity: { y: 0 }, debug: false } // Cambia a true para activar el debug
+    },
+    scale: {
+        mode: Phaser.Scale.RESIZE,  // Ajuste de tamaño sin distorsionar
+        autoCenter: Phaser.Scale.CENTER_BOTH,  // Centra el juego en la pantalla
     }
 };
+
 const game = new Phaser.Game(config);
 
