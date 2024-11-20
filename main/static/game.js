@@ -353,6 +353,8 @@ function buildMobileControls() {
     const rightButton = this.add.rectangle(150, this.scale.height - 50, 100, 50, 0x00ff00).setInteractive();
     const shootButton = this.add.rectangle(250, this.scale.height - 50, 100, 50, 0xff0000).setInteractive();
 
+    shootButton.setInteractive();
+
     leftButton.on('pointerdown', () => {
         player.setVelocityX(-160);
     });
@@ -366,6 +368,7 @@ function buildMobileControls() {
     rightButton.on('pointerup', () => {
         player.setVelocityX(0);
     });
+
 
     shootButton.on('pointerdown', () => {
         if (!harpoonLaunched) {
