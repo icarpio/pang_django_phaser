@@ -360,9 +360,9 @@ function buildMobileControls() {
     // Crear botones táctiles para controles móviles
     //const leftButton = this.add.rectangle(50, this.scale.height - 50, 100, 50, 0x0000ff).setInteractive();
 
-    const leftButton = this.add.sprite(50, this.scale.height - 50, 'leftButtonImage').setInteractive();
-    const rightButton = this.add.sprite(100, this.scale.height - 50, 'rightButtonImage').setInteractive();
-    const shootButton = this.add.sprite(800, this.scale.height - 50, 'shootButtonImage').setInteractive(); 
+    const leftButton = this.add.sprite(50, this.scale.height - 45, 'leftButtonImage').setInteractive();
+    const rightButton = this.add.sprite(150, this.scale.height - 45, 'rightButtonImage').setInteractive();
+    const shootButton = this.add.sprite(750, this.scale.height - 45, 'shootButtonImage').setInteractive(); 
 
     // Escala los botones si es necesario
     leftButton.setScale(2); // Ajusta el tamaño según sea necesario
