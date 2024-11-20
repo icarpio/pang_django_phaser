@@ -36,6 +36,9 @@ function preload() {
     for (let i = 0; i < levelBackgrounds.length; i++) {
         this.load.image(`background_${i + 1}`, levelBackgrounds[i]);
     }
+    this.load.image('leftButtonImage', '/static/leftButton.png'); // Carga la imagen del botón izquierdo
+    this.load.image('rightButtonImage', '/static/rightButton.png'); // Carga la imagen del botón derecho
+    this.load.image('shootButtonImage', '/static/shootButton.png'); // Carga la imagen del botón de disparo
 }
 
 function create() {
@@ -357,9 +360,11 @@ function handleMobileControls() {
 // Función para construir controles móviles
 function buildMobileControls() {
     // Crear botones táctiles para controles móviles
-    const leftButton = this.add.rectangle(50, this.scale.height - 50, 100, 50, 0x0000ff).setInteractive();
-    const rightButton = this.add.rectangle(150, this.scale.height - 50, 100, 50, 0x00ff00).setInteractive();
-    const shootButton = this.add.rectangle(250, this.scale.height - 50, 100, 50, 0xff0000).setInteractive();
+    //const leftButton = this.add.rectangle(50, this.scale.height - 50, 100, 50, 0x0000ff).setInteractive();
+
+    const leftButton = this.add.sprite(50, this.scale.height - 50, 'leftButtonImage').setInteractive();
+    const shootButton = this.add.sprite(150, this.scale.height - 50, 'rightButtonImage').setInteractive();
+    const rightButton = this.add.sprite(400, this.scale.height - 50, 'shootButtonImage').setInteractive(); 
 
     shootButton.setInteractive();
 
