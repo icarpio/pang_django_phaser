@@ -249,7 +249,7 @@ function endGame() {
     gameOverText.setOrigin(0.5);
 
     // Indica cómo reiniciar el juego
-    const restartText = this.add.text(400, 350, 'Presiona "R" para reiniciar', {
+    const restartText = this.add.text(400, 350, 'Toca para reiniciar o presiona "R"', {
         fontSize: '24px',
         fill: '#ffffff'
     });
@@ -260,6 +260,9 @@ function endGame() {
     bubbles.forEach(bubble => {
         bubble.setActive(false).setVisible(false);
     });
+
+    // Configurar un evento de toque para reiniciar el juego
+    this.input.on('pointerdown', restartGame, this);
 
     // Configurar una tecla para reiniciar el juego
     this.input.keyboard.once('keydown-R', restartGame, this);
@@ -275,7 +278,7 @@ function finishGame() {
     });
     victoryText.setOrigin(0.5);
 
-    const restartText = this.add.text(400, 350, 'Presiona "R" para reiniciar', {
+    const restartText = this.add.text(400, 350, 'Toca para reiniciar o presiona "R"', {
         fontSize: '24px',
         fill: '#ffffff'
     });
@@ -286,8 +289,13 @@ function finishGame() {
         bubble.setActive(false).setVisible(false);
     });
 
+    // Configurar un evento de toque para reiniciar el juego
+    this.input.on('pointerdown', restartGame, this);
+
+    // Configurar una tecla para reiniciar el juego
     this.input.keyboard.once('keydown-R', restartGame, this);
 }
+
 
 // Función para reiniciar el juego
 function restartGame() {
