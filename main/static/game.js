@@ -241,19 +241,33 @@ function nextLevel() {
 function endGame() {
     console.log("GAME OVER");
 
-    // Muestra el mensaje de GAME OVER
-    const gameOverText = this.add.text(400, 300, 'GAME OVER', {
-        fontSize: '32px',
-        fill: '#ffffff'
-    });
-    gameOverText.setOrigin(0.5);
-
-    // Indica cómo reiniciar el juego
+        // Indica cómo reiniciar el juego
     const restartText = this.add.text(400, 350, 'Presiona "R" para reiniciar', {
         fontSize: '24px',
         fill: '#ffffff'
     });
     restartText.setOrigin(0.5);
+
+    // Si el dispositivo es móvil, cambiar la instrucción
+    if (this.sys.game.device.input.touch) {
+        restartText.setText('Toca aquí para reiniciar'); // Cambiar el texto si es móvil
+
+        // Crear un botón táctil para reiniciar el juego en móviles
+        const restartButton = this.add.text(400, 400, 'Reiniciar', {
+            fontSize: '24px',
+            fill: '#ffffff',
+            backgroundColor: '#000',  // Puedes cambiar el color de fondo
+            padding: { x: 10, y: 5 }  // Añadir algo de relleno al botón
+        }).setOrigin(0.5).setInteractive();
+
+        // Acción al tocar el botón
+        restartButton.on('pointerdown', () => {
+            restartGame.call(this);
+        });
+    } else {
+        // Configurar una tecla para reiniciar el juego en el escritorio
+        this.input.keyboard.once('keydown-R', restartGame, this);
+    }
 
     // Desactivar al jugador y otros elementos si es necesario
     player.setActive(false).setVisible(false);
@@ -262,13 +276,12 @@ function endGame() {
     });
 
     
-    // Configurar una tecla para reiniciar el juego
-    this.input.keyboard.once('keydown-R', restartGame, this);
+   
 }
 
 // Función para finalizar el juego al alcanzar el nivel 6
 function finishGame() {
-    console.log("¡Felicidades! Has completado el juego.");
+    
 
     const victoryText = this.add.text(400, 300, '¡Felicidades! Has completado el juego.', {
         fontSize: '32px',
@@ -276,18 +289,38 @@ function finishGame() {
     });
     victoryText.setOrigin(0.5);
 
+    // Indica cómo reiniciar el juego
     const restartText = this.add.text(400, 350, 'Presiona "R" para reiniciar', {
         fontSize: '24px',
         fill: '#ffffff'
     });
     restartText.setOrigin(0.5);
 
+    // Si el dispositivo es móvil, cambiar la instrucción
+    if (this.sys.game.device.input.touch) {
+        restartText.setText('Toca aquí para reiniciar'); // Cambiar el texto si es móvil
+
+        // Crear un botón táctil para reiniciar el juego en móviles
+        const restartButton = this.add.text(400, 400, 'Reiniciar', {
+            fontSize: '24px',
+            fill: '#ffffff',
+            backgroundColor: '#000',  // Puedes cambiar el color de fondo
+            padding: { x: 10, y: 5 }  // Añadir algo de relleno al botón
+        }).setOrigin(0.5).setInteractive();
+
+        // Acción al tocar el botón
+        restartButton.on('pointerdown', () => {
+            restartGame.call(this);
+        });
+    } else {
+        // Configurar una tecla para reiniciar el juego en el escritorio
+        this.input.keyboard.once('keydown-R', restartGame, this);
+    }
     player.setActive(false).setVisible(false);
     bubbles.forEach(bubble => {
         bubble.setActive(false).setVisible(false);
     });
 
-    this.input.keyboard.once('keydown-R', restartGame, this);
 }
 
 // Función para reiniciar el juego
@@ -341,11 +374,6 @@ function update() {
     console.log(bubbles.length);
 }
 
-// Función para manejar controles móviles
-function handleMobileControls() {
-    // Aquí puedes manejar la lógica de los controles móviles
-    // Por ejemplo, verificar el estado de los botones táctiles
-}
 
 // Función para construir controles móviles
 function buildMobileControls() {
