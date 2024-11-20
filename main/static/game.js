@@ -10,11 +10,11 @@ let bubbles = [];
 let levelText, livesText, scoreText, finalScore = 0;
 let currentBackground;
 let levelBackgrounds = [
-    '/static/background_level_1.png', 
-    '/static/background_level_2.png',
-    '/static/background_level_3.png',
-    '/static/background_level_4.png',
-    '/static/background_level_5.png',
+    '/static/background_level_1.PNG', 
+    '/static/background_level_2.PNG',
+    '/static/background_level_3.PNG',
+    '/static/background_level_4.PNG',
+    '/static/background_level_5.PNG',
 ];
 let platforms;
 let harpoons; // Grupo para los arpones
@@ -32,7 +32,7 @@ function preload() {
     this.load.image('bubble', '/static/bubble.png');        
     this.load.image('bubbleSmall', '/static/bubbleSmall.png'); 
     this.load.image('bubbleTiny', '/static/bubbleTiny.png'); 
-    this.load.image('ground', '/static/ground.png'); 
+    this.load.image('ground', '/static/ground.PNG'); 
     for (let i = 0; i < levelBackgrounds.length; i++) {
         this.load.image(`background_${i + 1}`, levelBackgrounds[i]);
     }
