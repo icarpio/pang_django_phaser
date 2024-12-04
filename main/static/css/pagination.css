@@ -1,0 +1,88 @@
+body {
+    background-color: #121212; /* Very dark background */
+    color: #e0e0e0; /* Light text */
+    font-size: 14px;
+}
+.leaderboard-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #1e1e1e; /* Slightly lighter dark background */
+    border-radius: 8px;
+}
+.table-responsive {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+.table {
+    color: #e0e0e0; /* Light text for table */
+}
+.table-dark {
+    background-color: #2c2c2c; /* Dark header */
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255,255,255,0.05); /* Very subtle striping */
+}
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: rgba(0,0,0,0.1); /* Slightly different even rows */
+}
+.table td, .table th {
+    padding: 0.5rem;
+    vertical-align: middle;
+    border-color: #444; /* Dark border color */
+}
+.pagination {
+    margin: 10px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.pagination .page-link {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    border-color: #444;
+}
+.pagination .page-link:hover {
+    background-color: #3c3c3c;
+    color: #ffffff;
+}
+.pagination .page-item.disabled .page-link {
+    background-color: #1e1e1e;
+    color: #666;
+}
+.btn-primary {
+    background-color: #4a4a4a;
+    border-color: #666;
+    color: #e0e0e0;
+}
+.btn-primary:hover {
+    background-color: #5a5a5a;
+    color: #ffffff;
+}
+.custom-green-btn {
+    background-color: #45bb0b;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.custom-green-btn:hover {
+    background-color: #218838; /* Un verde más oscuro al pasar el ratón */
+}
+@media (max-width: 576px) {
+    body {
+        font-size: 12px;
+    }
+    .table-responsive {
+        max-height: 65vh;
+    }
+    .table td, .table th {
+        padding: 0.3rem;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+}

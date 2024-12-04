@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Pang Scores Leaderboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
+</head>
+<body>
+    <div class="container-fluid px-2">
+        <div class="leaderboard-container">
+            <h1 class="text-center mb-3">Scores Ranking</h1>
+            
+            <p class="text-center mb-2">Total Scores: {{ total_scores }}</p>
+            
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm">
+                    <thead class="table-dark position-sticky top-0">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for score in scores %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ score.player_name }}</td>
+                            <td>{{ score.score }}</td>
+                            <td>{{ score.date|date:"m/d H:i" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">No scores recorded yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            {# Pagination #}
+            <nav aria-label="Page navigation" class="d-flex justify-content-center">
+                <ul class="pagination mb-2">
+                    {% if scores.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1">First</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ scores.previous_page_number }}">Prev</a>
+                        </li>
+                    {% endif %}
+                    
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            {{ scores.number }}/{{ scores.paginator.num_pages }}
+                        </span>
+                    </li>
+                    
+                    {% if scores.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ scores.next_page_number }}">Next</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ scores.paginator.num_pages }}">Last</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+            <div class="text-center mt-2">
+                <a href="{% url 'index' %}" class="custom-green-btn">Back to Game</a>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optional, but recommended) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

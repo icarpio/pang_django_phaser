@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import PangScore
 from django.http import JsonResponse
 import json
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
@@ -39,4 +40,34 @@ def save_score(request):
             return JsonResponse({'error': 'Error interno del servidor: {}'.format(str(e))}, status=500)
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
+    
+
+
+def pang_scores_list(request):
+    # Get all scores, ordered by score in descending order
+    scores_list = PangScore.objects.order_by('-score')
+    
+    # Set up pagination (10 items per page)
+    paginator = Paginator(scores_list, 10)
+    
+    # Get the current page number from the request
+    page = request.GET.get('page', 1)
+    
+    try:
+        # Try to get the specified page
+        scores = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page
+        scores = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range, deliver last page of results
+        scores = paginator.page(paginator.num_pages)
+    
+    # Context to pass to the template
+    context = {
+        'scores': scores,
+        'total_scores': scores_list.count()
+    }
+    
+    return render(request, 'main/pang_scores_list.html', context)
 
