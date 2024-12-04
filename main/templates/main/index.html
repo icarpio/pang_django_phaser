@@ -3,48 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pang - Juego 2024</title>
+    <title>Pang - GAME 2024</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
             background-color: #282828;
             color: white;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
+
         .container {
-            margin-top: 150px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
         }
+
         h1 {
-            font-size: 50px;
+            font-size: 36px;
+            margin-bottom: 20px;
         }
+
         p {
-            font-size: 20px;
-        }
-        .button {
-            padding: 15px 30px;
             font-size: 18px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
+            margin-bottom: 20px;
         }
-        .button:hover {
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 18px;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], button {
+            padding: 12px 0;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #333;
+            color: white;
+            width: 100%; /* Ambos ocupan el 100% del ancho */
+            box-sizing: border-box; /* Para asegurarse de que el padding no afecte al ancho */
+        }
+
+        button {
+            background-color: #4CAF50;
+            cursor: pointer;
+        }
+
+        button:hover {
             background-color: #45a049;
         }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 30px;
+            }
+
+            label, input, button {
+                font-size: 16px;
+            }
+        }
     </style>
-   
 </head>
 <body>
     <div class="container">
-        <h1>¡Bienvenido a Pang 2024!</h1>
-        <p>Destruye las burbujas y gana puntajes.</p>
-        
-        <!-- Botón para comenzar el juego -->
-        <a href="{% url 'game' %}" class="button">¡Jugar Ahora!</a>
+        <h1>Welcome to PangClone!</h1>
+        <form method="POST" action="{% url 'index' %}">
+            {% csrf_token %}
+            <label for="username">Enter your username:</label>
+            <input type="text" id="username" name="username" required>
+            <button type="submit">Start Game</button>
+        </form>
     </div>
 </body>
 </html>

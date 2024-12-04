@@ -52,7 +52,10 @@
 <body>
     <!-- Contenedor del juego -->
     <div id="game-container"></div>
-    <!-- Cargar el archivo game.js después de definir las rutas -->
-    <script src="{% static 'game.js' %}"></script>
+    <script>
+        window.playerName = "{{ player_name|escapejs }}"; // Asigna playerName al objeto global
+    </script>
+    <script type="module" src="{% static 'js/utils.js' %}"></script>
+    <script type="module" src="{% static 'js/game.js' %}"></script>
 </body>
 </html>
