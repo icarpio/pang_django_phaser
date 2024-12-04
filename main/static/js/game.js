@@ -357,14 +357,16 @@ function endGame() {
     // Muestra el mensaje de GAME OVER
     const gameOverText = this.add.text(400, 300, 'GAME OVER', {
         fontSize: '32px',
-        fill: '#1a53b6'
+        fill: '#d5dbe7',
+        fontFamily: 'Arial',fontWeight: 'bold'
     });
     gameOverText.setOrigin(0.5);
 
     // Indica cómo reiniciar el juego
     const restartText = this.add.text(400, 350, 'Toca para reiniciar o presiona "R"', {
         fontSize: '24px',
-        fill: '#1a53b6'
+        fill: '#d5dbe7',
+        fontFamily: 'Arial',fontWeight: 'bold'
     });
     restartText.setOrigin(0.5);
 
@@ -385,17 +387,19 @@ function endGame() {
 
 // Función para finalizar el juego al alcanzar el nivel 6
 function finishGame() {
-    console.log("¡Felicidades! Has completado el juego.");
 
     const victoryText = this.add.text(400, 300, '¡Felicidades! Has completado el juego.', {
         fontSize: '32px',
-        fill: '#1a53b6'
+        fill: '#1d5dbe7',
+        fontFamily: 'Arial',fontWeight: 'bold'
+
     });
     victoryText.setOrigin(0.5);
 
     const restartText = this.add.text(400, 350, 'Toca para reiniciar o presiona "R"', {
         fontSize: '24px',
-        fill: '#1a53b6'
+        fill: '#d5dbe7',
+        fontFamily: 'Arial',fontWeight: 'bold'
     });
     restartText.setOrigin(0.5);
 
