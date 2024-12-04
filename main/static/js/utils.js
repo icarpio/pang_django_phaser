@@ -3,7 +3,8 @@ export function sendScoreToServer(playerName, score) {
     fetch('/api/scores/', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'  // Tipo de contenido JSON
+            'Content-Type': 'application/json',  // Tipo de contenido JSON
+            'X-CSRFToken': getCookie('csrftoken')  // Token CSRF para proteger la solicitud
         },
         body: JSON.stringify({ player_name: playerName, score: score })  // Enviar datos del jugador y los puntos
     })
@@ -28,6 +29,7 @@ function getCookie(name) {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
+            // Si esta cookie comienza con el nombre dado, obten su valor
             if (cookie.startsWith(`${name}=`)) {
                 cookieValue = cookie.substring(name.length + 1);
                 break;
@@ -36,7 +38,5 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
-
 
 
