@@ -4,15 +4,16 @@ from .models import PangScore
 from django.http import JsonResponse
 import json
 
+@csrf_exempt #Tengo que añadirlo aqui tambien?
 def index(request):
     if request.method == 'POST':
         player_name = request.POST.get('username')
         if player_name:
-            request.session['player_name'] = player_name  # Guardamos el nombre del jugador en la sesión
-            return redirect('game')  # Redirige al juego
+            request.session['player_name'] = player_name  
+            return redirect('https://pang-django-phaser.onrender.com/game/') 
 
     return render(request, 'main/index.html')
-
+@csrf_exempt #Tengo que añadirlo aqui tambien?
 def game(request):
     # Recuperar el nombre del jugador de la sesión
     player_name = request.session.get('player_name', 'Jugador Desconocido')
