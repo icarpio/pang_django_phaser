@@ -29,7 +29,6 @@ function getCookie(name) {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Si esta cookie comienza con el nombre dado, obten su valor
             if (cookie.startsWith(`${name}=`)) {
                 cookieValue = cookie.substring(name.length + 1);
                 break;
@@ -38,3 +37,5 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+

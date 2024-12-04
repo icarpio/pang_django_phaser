@@ -20,23 +20,31 @@ def game(request):
 def save_score(request):
     if request.method == 'POST':
         try:
+            # Verificar si hay datos en el body
+            if not request.body:
+                return JsonResponse({'error': 'No se recibieron datos en la solicitud'}, status=400)
+            
             # Parsear los datos JSON recibidos en la solicitud POST
             data = json.loads(request.body)
+            
+            # Asegurarse de que los datos contienen lo esperado
             player_name = data.get('player_name')
             score = data.get('score')
-
+            
             # Validar los datos recibidos
             if not player_name or not isinstance(score, (int, float)):
-                return JsonResponse({'error': 'Datos inválidos'}, status=400)
+                return JsonResponse({'error': 'Datos inválidos: se requiere un nombre de jugador y un puntaje numérico'}, status=400)
 
             # Crear y guardar el puntaje en la base de datos
             PangScore.objects.create(player_name=player_name, score=score)
+
             return JsonResponse({'message': 'Puntaje guardado correctamente!'}, status=201)
 
         except ValueError as e:
-            return JsonResponse({'error': 'Error al procesar los datos: {}'.format(str(e))}, status=400)
+            return JsonResponse({'error': f'Error al procesar los datos: {str(e)}'}, status=400)
         except Exception as e:
-            return JsonResponse({'error': 'Error interno del servidor: {}'.format(str(e))}, status=500)
+            # Capturar y mostrar cualquier otro error no esperado
+            return JsonResponse({'error': f'Error interno del servidor: {str(e)}'}, status=500)
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
 
