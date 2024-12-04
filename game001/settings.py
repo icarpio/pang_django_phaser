@@ -127,6 +127,7 @@ else:
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Configuración básica para sesiones en producción
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
