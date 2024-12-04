@@ -82,7 +82,7 @@
     <div class="container">
         <h1>Welcome to PangClone!</h1>
         <form method="POST" action="{% url 'index' %}">
-            {% csrf_token %}
+            
             <label for="username">Enter your username:</label>
             <input type="text" id="username" name="username" required>
             <button type="submit">Start Game</button>
@@ -90,3 +90,4 @@
     </div>
 </body>
 </html>
+
