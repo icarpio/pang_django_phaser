@@ -75,6 +75,7 @@ function create() {
 
     // Hacer que el jugador sea inmóvil en colisiones con burbujas
     player.body.immovable = true; 
+    console.log('PLAYER',playerName)
 
     this.anims.create({
         key: 'walk_left',

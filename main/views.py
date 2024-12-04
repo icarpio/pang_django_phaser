@@ -9,15 +9,12 @@ def index(request):
     if request.method == 'POST':
         player_name = request.POST.get('username')
         if player_name:
-            request.session['player_name'] = player_name  # Guardar el nombre del jugador en la sesión
-            return redirect('https://pang-django-phaser.onrender.com/game/')
+            return redirect(f'https://pang-django-phaser.onrender.com/game/?player_name={player_name}')
     return render(request, 'main/index.html')
 
 def game(request):
-    # Recuperar el nombre del jugador de la sesión
-    player_name = request.session.get('player_name', 'Jugador Desconocido')
+    player_name = request.GET.get('player_name', 'Jugador Desconocido')
     return render(request, 'main/game.html', {'player_name': player_name})
-
 
 @csrf_exempt  # Asegura que se permitan solicitudes sin CSRF si no se maneja en el frontend.
 def save_score(request):
