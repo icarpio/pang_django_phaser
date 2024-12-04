@@ -3,8 +3,7 @@ export function sendScoreToServer(playerName, score) {
     fetch('/api/scores/', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',  // Tipo de contenido JSON
-            'X-CSRFToken': getCookie('csrftoken')  // Token CSRF para proteger la solicitud
+            'Content-Type': 'application/json'  // Tipo de contenido JSON
         },
         body: JSON.stringify({ player_name: playerName, score: score })  // Enviar datos del jugador y los puntos
     })
@@ -37,5 +36,7 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+
 
 
