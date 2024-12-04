@@ -9,6 +9,7 @@ def index(request):
     if request.method == 'POST':
         player_name = request.POST.get('username')
         if player_name:
+            request.session['player_name'] = player_name  # Guardar el nombre del jugador en la sesión
             return redirect('https://pang-django-phaser.onrender.com/game/')
     return render(request, 'main/index.html')
 
