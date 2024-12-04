@@ -415,25 +415,7 @@ function finishGame() {
 
 // Función para manejar controles móviles
 function handleMobileControls() {
-    leftButton.on('pointerdown', () => {
-        player.setVelocityX(-160);
-    });
-    leftButton.on('pointerup', () => {
-        player.setVelocityX(0);
-    });
-
-    rightButton.on('pointerdown', () => {
-        player.setVelocityX(160);
-    });
-    rightButton.on('pointerup', () => {
-        player.setVelocityX(0);
-    });
-
-    shootButton.on('pointerdown', () => {
-        if (!harpoonLaunched) {
-            shootHarpoon.call(this);  // Dispara el arpón
-        }
-    });
+   
 }
 
 // Función para reiniciar el juego
@@ -511,6 +493,26 @@ function buildMobileControls() {
     leftButton.setScale(2); // Ajusta el tamaño según sea necesario
     rightButton.setScale(2);
     shootButton.setScale(2);
+
+    leftButton.on('pointerdown', () => {
+        player.setVelocityX(-160);
+    });
+    leftButton.on('pointerup', () => {
+        player.setVelocityX(0);
+    });
+
+    rightButton.on('pointerdown', () => {
+        player.setVelocityX(160);
+    });
+    rightButton.on('pointerup', () => {
+        player.setVelocityX(0);
+    });
+
+    shootButton.on('pointerdown', () => {
+        if (!harpoonLaunched) {
+            shootHarpoon.call(this);  // Dispara el arpón
+        }
+    });
 }
 
 // Configuración de Phaser
