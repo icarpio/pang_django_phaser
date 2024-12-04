@@ -496,16 +496,22 @@ function buildMobileControls() {
 
     leftButton.on('pointerdown', () => {
         player.setVelocityX(-160);
+        player.flipX = false; 
+        player.anims.play('walk_left', true); 
     });
     leftButton.on('pointerup', () => {
         player.setVelocityX(0);
+        player.anims.play('shoot', true);  
     });
 
     rightButton.on('pointerdown', () => {
         player.setVelocityX(160);
+        player.flipX = true; 
+        player.anims.play('walk_left', true); 
     });
     rightButton.on('pointerup', () => {
         player.setVelocityX(0);
+        player.anims.play('shoot', true);  
     });
 
     shootButton.on('pointerdown', () => {
