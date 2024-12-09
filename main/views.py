@@ -10,7 +10,8 @@ def index(request):
     if request.method == 'POST':
         player_name = request.POST.get('username')
         if player_name:
-            return redirect(f'https://pang-django-phaser.onrender.com/game/?player_name={player_name}')
+            #return redirect(f'https://pang-django-phaser.onrender.com/game/?player_name={player_name}')
+            return redirect(f'http://127.0.0.1:8000/game/?player_name={player_name}')
     return render(request, 'main/index.html')
 
 def game(request):
@@ -70,4 +71,8 @@ def pang_scores_list(request):
     }
     
     return render(request, 'main/pang_scores_list.html', context)
+
+
+
+
 

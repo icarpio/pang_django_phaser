@@ -242,8 +242,8 @@ function createBubblesAndObstacles() {
     // Tipos de burbujas para la primera burbuja
     const firstBubbleTypes = ['bubbleRed', 'bubbleBlue', 'bubblePurple'];
 
-    // Crear burbujas grandes según el nivel
-    for (let i = 0; i < level; i++) { // Generar burbujas dependiendo del nivel
+    
+    for (let i = 0; i < level; i++) { 
         const randomFirstBubbleType = firstBubbleTypes[Phaser.Math.Between(0, firstBubbleTypes.length - 1)];
         const firstBubbleInfo = BUBBLE_TYPES[randomFirstBubbleType];
 
