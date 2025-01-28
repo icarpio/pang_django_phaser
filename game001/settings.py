@@ -16,10 +16,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
-ALLOWED_HOSTS = ['pang-django-phaser.onrender.com','*']
+ALLOWED_HOSTS = ['pang-django-phaser.onrender.com']
 
 
 # Application definition

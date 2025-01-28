@@ -21,6 +21,11 @@ let levelBackgrounds = [
     '/static/img/background_level_5.PNG',
     '/static/img/background_level_6.PNG',
     '/static/img/background_level_7.PNG',
+    '/static/img/background_level_8.PNG',
+    '/static/img/background_level_9.PNG',
+    '/static/img/background_level_10.PNG',
+    '/static/img/background_level_11.PNG',
+    '/static/img/background_level_12.PNG',
 ];
 
 let bubbles = []; 
@@ -233,7 +238,7 @@ function createBubblesAndObstacles() {
 
     this.currentObstacle = this.physics.add.image(
         Phaser.Math.Between(50, 750), // Rango horizontal
-        Phaser.Math.Between(100, this.cameras.main.height / 2), // Rango vertical (mitad superior)
+        Phaser.Math.Between(150, this.cameras.main.height / 2), // Rango vertical (mitad superior)
         'obstacle'
     );
     this.currentObstacle.setImmovable(true); // Hacer que el obstáculo sea inamovible
@@ -242,8 +247,21 @@ function createBubblesAndObstacles() {
     // Tipos de burbujas para la primera burbuja
     const firstBubbleTypes = ['bubbleRed', 'bubbleBlue', 'bubblePurple'];
 
-    
-    for (let i = 0; i < level; i++) { 
+    // Determinar cuántas burbujas crear según el nivel
+    let numberOfBubbles;
+    if (level >= 1 && level <= 4) {
+        numberOfBubbles = 1;
+    } else if (level >= 5 && level <= 10) {
+        numberOfBubbles = 2;
+    } else if (level >= 11 && level <= 12) {
+        numberOfBubbles = 3;
+    } else {
+        numberOfBubbles = 0; // Si el nivel es mayor a 12, no se generan burbujas
+        finishGame.call(this);
+    }
+
+    // Crear burbujas según el número determinado
+    for (let i = 0; i < numberOfBubbles; i++) { 
         const randomFirstBubbleType = firstBubbleTypes[Phaser.Math.Between(0, firstBubbleTypes.length - 1)];
         const firstBubbleInfo = BUBBLE_TYPES[randomFirstBubbleType];
 
@@ -346,7 +364,7 @@ function nextLevel() {
     // Aumentar el número de burbujas para el siguiente nivel
     createBubblesAndObstacles.call(this);
      // Verificar si el nivel es 8 o superior
-     if (level >= 8) {
+     if (level >= 13) {
         finishGame.call(this);
         return;
     }
@@ -385,17 +403,16 @@ function endGame() {
     this.input.keyboard.once('keydown-R', restartGame, this);
 }
 
-// Función para finalizar el juego al alcanzar el nivel 6
 function finishGame() {
-
-    const victoryText = this.add.text(400, 300, '¡Felicidades! Has completado el juego.', {
+    // Muestra el mensaje de GAME OVER
+    const gameOverText = this.add.text(400, 300, 'VICTORY', {
         fontSize: '32px',
-        fill: '#1d5dbe7',
+        fill: '#d5dbe7',
         fontFamily: 'Arial',fontWeight: 'bold'
-
     });
-    victoryText.setOrigin(0.5);
+    gameOverText.setOrigin(0.5);
 
+    // Indica cómo reiniciar el juego
     const restartText = this.add.text(400, 350, 'Toca para reiniciar o presiona "R"', {
         fontSize: '24px',
         fill: '#d5dbe7',
@@ -405,6 +422,7 @@ function finishGame() {
 
     sendScoreToServer(playerName,score)
 
+    // Desactivar al jugador y otros elementos si es necesario
     player.setActive(false).setVisible(false);
     bubbles.forEach(bubble => {
         bubble.setActive(false).setVisible(false);
@@ -416,6 +434,7 @@ function finishGame() {
     // Configurar una tecla para reiniciar el juego
     this.input.keyboard.once('keydown-R', restartGame, this);
 }
+
 
 // Función para manejar controles móviles
 function handleMobileControls() {
