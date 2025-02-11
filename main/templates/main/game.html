@@ -37,8 +37,8 @@
         }
 
         /* Contenedor del anuncio */
-        #ad-container {
-            margin-top: 10px; /* Espacio entre el juego y el anuncio */
+        .ad-container {
+            margin: 10px 0; /* Espacio entre el anuncio y el juego */
             text-align: center; /* Centrar el anuncio */
         }
 
@@ -67,14 +67,28 @@
 <body>
     <!-- Contenedor principal -->
     <div class="container">
+        <!-- Contenedor del anuncio superior -->
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '824f92a0c906441a2ab903c4ef205a5e',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/824f92a0c906441a2ab903c4ef205a5e/invoke.js"></script>
+        </div>
+
         <!-- Contenedor del juego -->
         <div id="game-container"></div>
 
-        <!-- Contenedor del anuncio -->
-        <div id="ad-container">
+        <!-- Contenedor del anuncio inferior -->
+        <div class="ad-container">
             <script type="text/javascript">
                 atOptions = {
-                    'key' : 'afb77ec1b749bdcfd1a1d70d1edf347f',
+                    'key' : 'afb77ec1b749bdcfd1a1d70d1edf347f', // Clave del primer anuncio
                     'format' : 'iframe',
                     'height' : 50,
                     'width' : 320,
