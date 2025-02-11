@@ -31,6 +31,12 @@
             flex-grow: 1; /* Permitir que el contenedor del juego crezca */
         }
 
+        /* Contenedor del juego */
+        #game-container {
+            width: 100%; /* Ajustar al 100% del contenedor */
+            height: 80%; /* Ajustar al 80% de la altura del contenedor */
+        }
+
         /* Contenedor del anuncio */
         .ad-container {
             margin: 10px 0; /* Espacio entre el anuncio y el juego */
@@ -42,13 +48,18 @@
             .container {
                 padding: 5%; /* Un poco de margen en pantallas pequeñas */
             }
-
+            #game-container {
+                height: 60%; /* Ajustar la altura del juego en móviles */
+            }
         }
 
         /* Ajustes para pantallas grandes (más de 768px) */
         @media (min-width: 769px) {
             .container {
                 padding: 20px; /* Márgenes más grandes para pantallas de escritorio */
+            }
+            #game-container {
+                height: 80%; /* Ajustar la altura del juego en pantallas grandes */
             }
         }
     </style>
@@ -58,17 +69,37 @@
     <!-- Contenedor principal -->
     <div class="container">
         <!-- Contenedor del anuncio superior -->
-        <div class="ad-container">
+        <div class="ad-container" id="ad-container">
             <script type="text/javascript">
-                atOptions = {
-                    'key' : '824f92a0c906441a2ab903c4ef205a5e',
-                    'format' : 'iframe',
-                    'height' : 90,
-                    'width' : 728,
-                    'params' : {}
-                };
+                function loadAd() {
+                    // Limpiar el contenedor del anuncio
+                    var adContainer = document.getElementById('ad-container');
+                    adContainer.innerHTML = '';
+        
+                    // Configuración del anuncio
+                    var atOptions = {
+                        'key': '824f92a0c906441a2ab903c4ef205a5e',
+                        'format': 'iframe',
+                        'height': 90,
+                        'width': 728,
+                        'params': {}
+                    };
+        
+                    // Crear el script del anuncio
+                    var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = '//www.highperformanceformat.com/824f92a0c906441a2ab903c4ef205a5e/invoke.js';
+        
+                    // Agregar el script al contenedor
+                    adContainer.appendChild(script);
+                }
+        
+                // Cargar el anuncio inicialmente
+                loadAd();
+        
+                // Recargar el anuncio cada 30 segundos (30000 milisegundos)
+                setInterval(loadAd, 30000);
             </script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/824f92a0c906441a2ab903c4ef205a5e/invoke.js"></script>
         </div>
 
         <!-- Contenedor del juego -->
