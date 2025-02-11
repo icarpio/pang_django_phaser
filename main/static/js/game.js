@@ -395,6 +395,7 @@ function endGame() {
     bubbles.forEach(bubble => {
         bubble.setActive(false).setVisible(false);
     });
+    //harpoon.setActive(false).setVisible(false);
 
     // Configurar un evento de toque para reiniciar el juego
     this.input.on('pointerdown', restartGame, this);
