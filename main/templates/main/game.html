@@ -32,6 +32,11 @@
         width: 100%;
         height: 100%;
     }
+    #ad-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px; /* Ajusta el margen superior según sea necesario */
+    }
 
     /* Ajuste para pantallas pequeñas (móviles) */
     @media (max-width: 768px) {
@@ -52,16 +57,20 @@
 <body>
     <!-- Contenedor del juego -->
     <div id="game-container"></div>
-    <script type="text/javascript">
-        atOptions = {
-            'key' : 'afb77ec1b749bdcfd1a1d70d1edf347f',
-            'format' : 'iframe',
-            'height' : 50,
-            'width' : 320,
-            'params' : {}
-        };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/afb77ec1b749bdcfd1a1d70d1edf347f/invoke.js"></script>
+    <!--Ads-->
+    <div id="ad-container">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : 'afb77ec1b749bdcfd1a1d70d1edf347f',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/afb77ec1b749bdcfd1a1d70d1edf347f/invoke.js"></script>
+    </div>
+
     <script>
         window.playerName = "{{ player_name|escapejs }}"; // Asigna playerName al objeto global
     </script>
