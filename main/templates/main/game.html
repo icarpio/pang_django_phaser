@@ -10,68 +10,58 @@
     <script src="//cdn.jsdelivr.net/npm/phaser@3.86.0/dist/phaser.js"></script>
     
     <!-- Estilos opcionales -->
-<!-- Estilos opcionales -->
-<style>
-    body {
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #000;
-        overflow: hidden;
-    }
-    
-    .main-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Centrar contenido */
-        width: 100%;
-        max-width: 900px; /* Evitar que el contenido sea demasiado ancho en pantallas grandes */
-    }
-    
-    /* Estilos para el contenedor del juego */
-    #game-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        max-width: 800px; /* Limitar el tamaño del juego */
-    }
-    
-    /* Estilos para el anuncio */
-    #ad-container {
-        margin-top: 10px;
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
-    
-    /* 🎯 Diseño Responsive */
-    @media (max-width: 768px) {
-        .main-container {
-            width: 95%; /* Ocupar más espacio en pantallas pequeñas */
+    <style>
+        body {
+            margin: 0; /* Eliminar márgenes por defecto */
+            display: flex; /* Usar Flexbox para centrar el contenido */
+            flex-direction: column; /* Colocar elementos en columna */
+            align-items: center; /* Centrar horizontalmente */
+            height: 100vh; /* Usar toda la altura de la ventana */
+            background-color: #000; /* Color de fondo */
+            overflow: hidden; /* Evitar barras de desplazamiento */
         }
-    
+
+        /* Contenedor principal */
+        .container {
+            display: flex;
+            flex-direction: column; /* Colocar elementos en columna */
+            align-items: center; /* Centrar horizontalmente */
+            padding: 10px;
+            width: 100%;
+            flex-grow: 1; /* Permitir que el contenedor del juego crezca */
+        }
+
+        /* Contenedor del juego */
         #game-container {
-            max-width: 100%;
+            width: 100%; /* Ajustar al 100% del contenedor */
+            height: 100%; /* Ajustar al 100% del contenedor */
         }
-    
+
+        /* Contenedor del anuncio */
         #ad-container {
-            width: 100%; /* Anuncio ocupa todo el ancho en móviles */
+            margin-top: 10px; /* Espacio entre el juego y el anuncio */
+            text-align: center; /* Centrar el anuncio */
         }
-    }
-    
-    @media (max-width: 480px) {
-        #ad-container iframe {
-            width: 100%; /* Anuncio totalmente adaptable en móviles pequeños */
+
+        /* Ajuste para pantallas pequeñas (móviles) */
+        @media (max-width: 768px) {
+            .container {
+                padding: 5%; /* Un poco de margen en pantallas pequeñas */
+            }
         }
-    }
-</style>
+
+        /* Ajustes para pantallas grandes (más de 768px) */
+        @media (min-width: 769px) {
+            .container {
+                padding: 20px; /* Márgenes más grandes para pantallas de escritorio */
+            }
+        }
+    </style>
 
 </head>
 <body>
-    <div class="main-container">
+    <!-- Contenedor principal -->
+    <div class="container">
         <!-- Contenedor del juego -->
         <div id="game-container"></div>
 
