@@ -13,92 +13,83 @@
     <style>
         body {
             margin: 0; /* Eliminar márgenes por defecto */
-            display: flex; /* Usar Flexbox para centrar el contenido */
-            flex-direction: column; /* Colocar elementos en columna */
-            align-items: center; /* Centrar horizontalmente */
-            height: 100vh; /* Usar toda la altura de la ventana */
-            background-color: #000; /* Color de fondo */
-            overflow: hidden; /* Evitar barras de desplazamiento */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #000; /* Fondo negro */
+            overflow: hidden;
+            height: 100vh; /* Usa toda la altura disponible */
         }
 
         /* Contenedor principal */
         .container {
             display: flex;
-            flex-direction: column; /* Colocar elementos en columna */
-            align-items: center; /* Centrar horizontalmente */
-            padding: 10px;
+            flex-direction: column;
+            align-items: center;
             width: 100%;
-            flex-grow: 1; /* Permitir que el contenedor del juego crezca */
+            flex-grow: 1;
         }
 
         /* Contenedor del juego */
         #game-container {
-            width: 100%; /* Ajustar al 100% del contenedor */
-            height: 80%; /* Ajustar al 80% de la altura del contenedor */
+            width: 100%;
+            max-width: 800px; /* Ajusta el ancho máximo */
+            height: 60vh; /* Altura proporcional a la pantalla */
+            background-color: #111; /* Fondo visible para depuración */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Contenedor del anuncio */
         .ad-container {
-            margin: 10px 0; /* Espacio entre el anuncio y el juego */
-            text-align: center; /* Centrar el anuncio */
+            width: 100%;
+            text-align: center;
+            margin: 10px 0; /* Espacio arriba y abajo */
         }
 
         /* Ajuste para pantallas pequeñas (móviles) */
         @media (max-width: 768px) {
-            .container {
-                padding: 5%; /* Un poco de margen en pantallas pequeñas */
-            }
             #game-container {
-                height: 60%; /* Ajustar la altura del juego en móviles */
-            }
-        }
-
-        /* Ajustes para pantallas grandes (más de 768px) */
-        @media (min-width: 769px) {
-            .container {
-                padding: 20px; /* Márgenes más grandes para pantallas de escritorio */
-            }
-            #game-container {
-                height: 80%; /* Ajustar la altura del juego en pantallas grandes */
+                height: 50vh; /* Ajusta la altura en móviles */
             }
         }
     </style>
 
 </head>
 <body>
+    <!-- Contenedor del anuncio superior -->
+    <div class="ad-container">
+        <script type="text/javascript">
+            atOptions = {
+                'key': '824f92a0c906441a2ab903c4ef205a5e',
+                'format': 'iframe',
+                'height': 90,
+                'width': 728,
+                'params': {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/824f92a0c906441a2ab903c4ef205a5e/invoke.js"></script>
+    </div>
+
     <!-- Contenedor principal -->
     <div class="container">
-        <!-- Contenedor del anuncio superior -->
-        <div class="ad-container">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '824f92a0c906441a2ab903c4ef205a5e',
-                    'format' : 'iframe',
-                    'height' : 90,
-                    'width' : 728,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/824f92a0c906441a2ab903c4ef205a5e/invoke.js"></script>
-        </div>
-
         <!-- Contenedor del juego -->
-        <div id="game-container">
-            <!-- Contenedor del anuncio inferior -->
-        <div class="ad-container">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : 'afb77ec1b749bdcfd1a1d70d1edf347f',
-                    'format' : 'iframe',
-                    'height' : 50,
-                    'width' : 320,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/afb77ec1b749bdcfd1a1d70d1edf347f/invoke.js"></script>
-        </div>
-        </div>
+        <div id="game-container"></div>
+    </div>
 
+    <!-- Contenedor del anuncio inferior -->
+    <div class="ad-container">
+        <script type="text/javascript">
+            atOptions = {
+                'key': 'afb77ec1b749bdcfd1a1d70d1edf347f',
+                'format': 'iframe',
+                'height': 50,
+                'width': 320,
+                'params': {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/afb77ec1b749bdcfd1a1d70d1edf347f/invoke.js"></script>
     </div>
 
     <script>
