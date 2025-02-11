@@ -13,62 +13,81 @@
 <!-- Estilos opcionales -->
 <style>
     body {
-        margin: 0; /* Eliminar márgenes por defecto */
-        display: flex; /* Usar Flexbox para centrar el contenido */
-        justify-content: center; /* Centrar horizontalmente */
-        align-items: center; /* Centrar verticalmente */
-        height: 100vh; /* Usar toda la altura de la ventana */
-        background-color: #000; /* Color de fondo */
-        overflow: hidden; /* Evitar barras de desplazamiento */
-    }
-
-    /* No modificamos el canvas, solo centramos el contenido */
-    .container {
+        margin: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
-        padding: 10px;
-        width: 100%;
-        height: 100%;
+        height: 100vh;
+        background-color: #000;
+        overflow: hidden;
     }
-    #ad-container {
+    
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centrar contenido */
+        width: 100%;
+        max-width: 900px; /* Evitar que el contenido sea demasiado ancho en pantallas grandes */
+    }
+    
+    /* Estilos para el contenedor del juego */
+    #game-container {
         display: flex;
         justify-content: center;
-        margin-top: 10px; /* Ajusta el margen superior según sea necesario */
+        align-items: center;
+        width: 100%;
+        max-width: 800px; /* Limitar el tamaño del juego */
     }
-
-    /* Ajuste para pantallas pequeñas (móviles) */
+    
+    /* Estilos para el anuncio */
+    #ad-container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    /* 🎯 Diseño Responsive */
     @media (max-width: 768px) {
-        .container {
-            padding: 5%; /* Un poco de margen en pantallas pequeñas */
+        .main-container {
+            width: 95%; /* Ocupar más espacio en pantallas pequeñas */
+        }
+    
+        #game-container {
+            max-width: 100%;
+        }
+    
+        #ad-container {
+            width: 100%; /* Anuncio ocupa todo el ancho en móviles */
         }
     }
-
-    /* Ajustes para pantallas grandes (más de 768px) */
-    @media (min-width: 769px) {
-        .container {
-            padding: 20px; /* Márgenes más grandes para pantallas de escritorio */
+    
+    @media (max-width: 480px) {
+        #ad-container iframe {
+            width: 100%; /* Anuncio totalmente adaptable en móviles pequeños */
         }
     }
 </style>
 
 </head>
 <body>
-    <!-- Contenedor del juego -->
-    <div id="game-container"></div>
-    <!--Ads-->
-    <div id="ad-container">
-        <script type="text/javascript">
-            atOptions = {
-                'key' : 'afb77ec1b749bdcfd1a1d70d1edf347f',
-                'format' : 'iframe',
-                'height' : 50,
-                'width' : 320,
-                'params' : {}
-            };
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/afb77ec1b749bdcfd1a1d70d1edf347f/invoke.js"></script>
+    <div class="main-container">
+        <!-- Contenedor del juego -->
+        <div id="game-container"></div>
+
+        <!-- Contenedor del anuncio -->
+        <div id="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'afb77ec1b749bdcfd1a1d70d1edf347f',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/afb77ec1b749bdcfd1a1d70d1edf347f/invoke.js"></script>
+        </div>
     </div>
 
     <script>
