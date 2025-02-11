@@ -82,8 +82,9 @@
             <script type="text/javascript" src="//www.highperformanceformat.com/824f92a0c906441a2ab903c4ef205a5e/invoke.js"></script>
         </div>
 
-        <script type="module" src="{% static 'js/game.js' %}"></script>
-        <script type="module" src="{% static 'js/utils.js' %}"></script>
+        <!-- Contenedor del juego -->
+        <div id="game-container"></div>
+
         <!-- Contenedor del anuncio inferior -->
         <div class="ad-container">
             <script type="text/javascript">
@@ -102,7 +103,7 @@
     <script>
         window.playerName = "{{ player_name|escapejs }}"; // Asigna playerName al objeto global
     </script>
-    
-    
+    <script type="module" src="{% static 'js/utils.js' %}"></script>
+    <script type="module" src="{% static 'js/game.js' %}"></script>
 </body>
 </html>

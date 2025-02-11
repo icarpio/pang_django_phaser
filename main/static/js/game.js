@@ -551,6 +551,7 @@ const config = {
     width: 800,
     height: 600,
     scene: { preload, create, update },
+    parent: 'game-container',
     physics: {
         default: 'arcade',
         arcade: { gravity: { y: 0 }, debug: false } // Cambia a true para activar el debug
